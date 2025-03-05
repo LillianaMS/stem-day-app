@@ -1,0 +1,4 @@
+INSERT INTO registry (qrCodeNum, firstName, lastName, email, shareID, shareUrl, scriptName, mp3Url) VALUES
+('123', 'Alicia', 'Cruz', 'acruz@gmail.com', 'J83DH2DH9256', 'https://earsketch.gatech.edu/earsketch2/?sharing=J83DH2DH9256', '123_alicia.py', 'remoodle.fun/nsf-stem-day/canciones/123.mp3'),
+('839', 'Alicia', 'Cruz', 'acruz@gmail.com', 'OJ29HDCFQ90E', 'https://earsketch.gatech.edu/earsketch2/?sharing=OJ29HDCFQ90E', '839_alicia.py', 'remoodle.fun/nsf-stem-day/canciones/839.mp3'),
+('243', 'Juan', 'Perez', 'jperez@yahoo.com', 'LJ83HVD02H11', 'https://earsketch.gatech.edu/earsketch2/?sharing=LJ83HVD02H11', '243_juan.py', 'remoodle.fun/nsf-stem-day/canciones/243.mp3');

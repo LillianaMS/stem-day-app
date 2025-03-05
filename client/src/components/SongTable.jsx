@@ -1,0 +1,60 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+function SongTable() {
+  const [songs, setSongs] = useState([]);
+
+  function getRegisteredSongs(setSongs) {
+    axios.get('http://localhost:8081/api/registeredSongs')
+      .then((response) => {
+        console.log(response);
+        setSongs(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  useEffect(() => {
+      getRegisteredSongs(setSongs);
+    }, []);
+
+  return (
+    <div className="container">
+      <header>
+        <table className="table table-striped table-bordered">
+          <thead className="thead-dark">
+            <tr>
+              <th>Name</th>
+              <th>QR Code</th>
+              <th>MP3 URL</th>
+              <th>Script Name</th>
+              {/* <th>Share ID</th> */}
+              {/* <th>Share URL</th>
+              <th>Timestamp</th>
+              <th>Email</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {songs.map((song, index) => (
+              <tr key={index}>
+                <td>{song.firstName + " " + song.lastName}</td>
+                <td>{song.qrCodeNum}</td>
+                <td>{song.mp3Url}</td>
+                <td>{song.scriptName}</td>
+                {/* <td>{song.shareID}</td> */}
+                {/* <td>{song.shareUrl}</td>
+                <td>{song.startDate}</td>
+                <td>{song.email}</td> */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </header>
+    </div>
+  );
+}
+
+export default SongTable;
