@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS stem_day_backend;
+-- CREATE DATABASE IF NOT EXISTS remezcla;
 
-USE stem_day_backend;
+USE remezcla;
 
 CREATE TABLE IF NOT EXISTS registry (
     qrCodeNum VARCHAR(128) NOT NULL PRIMARY KEY,

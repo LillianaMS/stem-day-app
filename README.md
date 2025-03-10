@@ -18,7 +18,7 @@ A full-stack application for managing STEM Day events.
 
 ```bash
 cd client
-npm install
+npm install --verbose
 npm run dev
 ```
 

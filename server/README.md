@@ -10,7 +10,7 @@ MYSQL_DB='stem-day-backend'
 
 #### Setup sample database:
 ```
-npm run-script init-db
+npm run init-db
 ```
 
 #### Run the server:
