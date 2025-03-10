@@ -7,7 +7,7 @@ function SongTable() {
   const [songs, setSongs] = useState([]);
 
   function getRegisteredSongs(setSongs) {
-    axios.get('http://localhost:8081/api/registeredSongs')
+    axios.get('/api/registeredSongs')
       .then((response) => {
         console.log(response);
         setSongs(response.data);
