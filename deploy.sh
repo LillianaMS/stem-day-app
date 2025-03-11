@@ -14,7 +14,7 @@ cd client
 
 # Install production dependencies
 echo "Installing client dependencies..."
-npm ci --only=production --no-audit --no-fund
+npm install --only=production --no-audit --no-fund
 
 # Build client
 echo "Building optimized production bundle..."
@@ -45,7 +45,7 @@ fi
 # Start the server in production mode
 echo "Starting server in production mode..."
 export NODE_ENV=production
-pm2 start server.js --name "stem-day-app" || echo -e "\033[0;31mWarning: Failed to start with PM2. Is PM2 installed?${NC}"
+npx pm2 start server.js --name "stem-day-app" || echo -e "\033[0;31mWarning: Failed to start with PM2. Is PM2 installed?${NC}"
 
 cd ..
 

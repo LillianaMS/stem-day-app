@@ -63,12 +63,15 @@ The server will be available at http://localhost:8081.
 
 Before deployment, ensure the following environment variables are set on your production server:
 
-- `NODE_ENV=production`
-- `DB_HOST` - Production database host
-- `DB_USER` - Production database user
-- `DB_PASSWORD` - Production database password
-- `DB_NAME` - Production database name
-- `DB_PORT` - Production database port
+
+```
+  export NODE_ENV=production ????
+  export DB_HOST=your_db_host
+  export DB_USER=your_db_user
+  export DB_PASSWORD=your_password
+  export DB_NAME=your_db_name
+  export DB_PORT=your_db_port
+```
 
 ### Deployment Script
 
