@@ -11,7 +11,7 @@ A full-stack application for managing STEM Day events.
 
 ### Prerequisites
 
-- Node.js (v14 or later)
+- Node.js (v16 or later)
 - MySQL
 
 ### Client Setup
@@ -59,27 +59,39 @@ The server will be available at http://localhost:8081.
 
 ## Production Deployment
 
-### Environment Variables
+We use a two-stage deployment process:
 
-Before deployment, ensure the following environment variables are set on your production server:
+1. Build locally and push to GitHub
+2. Pull on the server and run the deployment script
 
+### Local Build
 
-```
-  export NODE_ENV=production ????
-  export DB_HOST=your_db_host
-  export DB_USER=your_db_user
-  export DB_PASSWORD=your_password
-  export DB_NAME=your_db_name
-  export DB_PORT=your_db_port
-```
-
-### Deployment Script
-
-Run the deployment script from the project root:
+Run the deployment script locally:
 
 ```bash
-chmod +x deploy.sh
-./deploy.sh
+bash deploy.sh
+```
+
+This will:
+- Build the client application
+- Set up the server
+- Create a remote deployment script
+
+### Remote Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the complete deployment instructions.
+
+Environment variables are configured in `.env.production` on the server:
+
+```
+NODE_ENV=production
+PORT=8081
+
+# Database configuration
+MYSQL_HOST=your_db_host
+MYSQL_USER=your_db_user
+MYSQL_PWD=your_db_password
+MYSQL_DB=your_db_name
 ```
 
 ## Security Considerations

@@ -3,10 +3,10 @@ node_modules/
 .pnp
 .pnp.js
 
-# Build files
-client/build/
-client/dist/
-server/build/
+# Build files - commented out to include in remote deployment
+# client/build/
+# client/dist/
+# server/build/
 
 # Environment variables
 .env
