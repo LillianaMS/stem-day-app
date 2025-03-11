@@ -12,9 +12,9 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}Deploying client...${NC}"
 cd client
 
-# Install production dependencies
+# Install production dependencies (including dev dependencies needed for build)
 echo "Installing client dependencies..."
-npm install --only=production --no-audit --no-fund
+npm install --verbose --no-audit --no-fund
 
 # Build client
 echo "Building optimized production bundle..."
@@ -28,12 +28,20 @@ cd server
 
 # Install production dependencies
 echo "Installing server dependencies..."
-npm ci --only=production --no-audit --no-fund
+npm ci --verbose --only=production --no-audit --no-fund
+
+# Source environment variables from .env.production if it exists
+if [ -f ".env.production" ]; then
+  echo "Loading environment variables from .env.production..."
+  set -a  # automatically export all variables
+  source .env.production
+  set +a
+fi
 
 # Check if environment variables are set for production
 if [ -z "$DB_HOST" ] || [ -z "$DB_USER" ] || [ -z "$DB_PASSWORD" ] || [ -z "$DB_NAME" ] || [ -z "$DB_PORT" ]; then
   echo -e "\033[0;31mError: Required environment variables are not set.${NC}"
-  echo "Make sure to set the following variables:"
+  echo "Make sure to set the following variables in .env.production or in your environment:"
   echo "  - DB_HOST"
   echo "  - DB_USER"
   echo "  - DB_PASSWORD"
@@ -42,10 +50,16 @@ if [ -z "$DB_HOST" ] || [ -z "$DB_USER" ] || [ -z "$DB_PASSWORD" ] || [ -z "$DB_
   exit 1
 fi
 
+# Install PM2 globally if not already installed
+if ! command -v pm2 &> /dev/null; then
+  echo "Installing PM2 globally..."
+  npm install -g pm2
+fi
+
 # Start the server in production mode
 echo "Starting server in production mode..."
 export NODE_ENV=production
-npx pm2 start server.js --name "stem-day-app" || echo -e "\033[0;31mWarning: Failed to start with PM2. Is PM2 installed?${NC}"
+pm2 start server.js --name "stem-day-app" || echo -e "\033[0;31mWarning: Failed to start with PM2. Is PM2 installed?${NC}"
 
 cd ..
 
