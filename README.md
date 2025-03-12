@@ -14,7 +14,7 @@ A full-stack application for managing STEM Day events.
 - Node.js (v16 or later)
 - MySQL
 
-### Client Setup
+### Client Setup for Development
 
 ```bash
 cd client
