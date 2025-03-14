@@ -12,10 +12,22 @@ export default defineConfig(({ mode }) => {
           : 'http://localhost:8081'
       }
     },
-    base: mode === 'production' ? '/stemday/' : '/',
+    base: mode === 'production' ? './' : '/',
     build: {
       outDir: 'dist',
-      emptyOutDir: true
+      emptyOutDir: true,
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/buildIndex[name].js',
+          chunkFileNames: 'assets/buildChunk[name].js',
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name.endsWith('.css')) {
+              return 'assets/buildStyles.css';
+            }
+            return 'assets/[name][extname]';
+          }
+        }
+      }
     }
   }
 })

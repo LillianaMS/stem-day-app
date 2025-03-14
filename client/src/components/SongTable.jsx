@@ -9,11 +9,16 @@ function SongTable() {
   function getRegisteredSongs(setSongs) {
     axios.get('/api/registeredSongs')
       .then((response) => {
-        console.log(response);
+        console.log('API Response:', response);
         setSongs(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.error('API Error:', error);
+        // Try to provide more detailed error information
+        if (error.response) {
+          console.error('Error status:', error.response.status);
+          console.error('Error data:', error.response.data);
+        }
       });
   }
 

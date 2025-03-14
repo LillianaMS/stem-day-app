@@ -48,8 +48,19 @@ fi
 
 # Copy client build to server's public directory
 echo "Copying client build to server public directory..."
-# mkdir -p /var/www/html/moodle/stemday
+# Ensure the target directory exists
+mkdir -p /var/www/html/moodle/stemday
+
+# Copy the client build to the server directory
 cp -r ../client/dist/* /var/www/html/moodle/stemday
+
+# Create symbolic link for assets if it doesn't exist
+if [ ! -L "/var/www/html/moodle/stemday/assets" ]; then
+  echo "Creating symbolic link for assets..."
+  ln -sf /home/stemday/stem-day-app/client/dist/assets /var/www/html/moodle/stemday/assets
+else
+  echo "Assets symbolic link already exists"
+fi
 
 # Start the server in production mode with PM2
 echo "Starting server in production mode with PM2..."
