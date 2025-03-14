@@ -9,8 +9,8 @@
 /coverage
 
 # production - commented out to include build files for remote deployment
-# /build
-# /dist
+/build
+/dist
 
 # misc
 .DS_Store

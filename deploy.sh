@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Local build script for STEM day app
-echo "Starting local build for STEM Day Full Stack App..."
+# Build script for STEM day app
+echo "Starting build for STEM Day Full Stack App..."
 
 # Define colors for output
 GREEN='\033[0;32m'
@@ -14,40 +14,11 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}Building client...${NC}"
 cd client
 
-# Install dependencies (including dev dependencies needed for build)
-echo "Installing client dependencies..."
-npm install --verbose --no-audit --no-fund
-
 # Build client for production
 echo "Building optimized production bundle..."
 NODE_ENV=production npm run build
 
 cd ..
-
-# Setup server locally
-echo -e "${BLUE}Setting up server...${NC}"
-cd server
-
-# Install dependencies
-echo "Installing server dependencies..."
-npm install --verbose --no-audit --no-fund
-
-cd ..
-
-# Create remote deployment script
-echo -e "${BLUE}Creating remote deployment script...${NC}"
-cat > remote-deploy.sh << 'EOF'
-#!/bin/bash
-
-# Remote deployment script for STEM day app
-echo "Starting remote deployment for STEM Day App..."
-
-# Define colors for output
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-RED='\033[0;31m'
-YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
 
 # Source environment variables from .env.production if it exists
 cd server
@@ -77,7 +48,7 @@ fi
 
 # Copy client build to server's public directory
 echo "Copying client build to server public directory..."
-mkdir -p /var/www/html/moodle/stemday
+# mkdir -p /var/www/html/moodle/stemday
 cp -r ../client/dist/* /var/www/html/moodle/stemday
 
 # Start the server in production mode with PM2
@@ -91,21 +62,7 @@ echo "Setting up PM2 to start on system boot..."
 pm2 save
 cd ..
 
+echo ""
 echo -e "${GREEN}Remote deployment complete!${NC}"
 echo "The application should now be running at http://remoodle.fun/stemday"
-EOF
-
-chmod +x remote-deploy.sh
-
-# Instructions for next steps
-echo ""
-echo -e "${GREEN}Local build complete!${NC}"
-echo -e "${YELLOW}NEXT STEPS:${NC}"
-echo "1. Commit and push these changes to GitHub (including the build files)"
-echo "2. SSH into your remote server"
-echo "3. Pull the latest changes from GitHub"
-echo "4. Run the remote deployment script:"
-echo -e "   ${BLUE}bash remote-deploy.sh${NC}"
-echo ""
-echo "Your application will be accessible at: http://remoodle.fun/stemday"
 echo ""

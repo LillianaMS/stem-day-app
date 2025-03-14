@@ -1,6 +1,6 @@
 # STEM Day Application
 
-A full-stack application for managing STEM Day events.
+A full-stack application for monitoring PR STEM Day creations.
 
 ## Project Structure
 
@@ -24,7 +24,7 @@ npm run dev
 
 The client will be available at http://localhost:3000.
 
-### Server Setup
+### Server Setup for Development
 
 1. Create a `.env` file in the server directory with your database credentials:
 
@@ -50,38 +50,34 @@ node dbSetup/initDB.js
 3. Start the server:
 
 ```bash
-cd server
 npm install
 npm start
 ```
 
 The server will be available at http://localhost:8081.
 
-## Production Deployment
 
-We use a two-stage deployment process:
 
-1. Build locally and push to GitHub
-2. Pull on the server and run the deployment script
+## Production Deployment on Remote Server
 
-### Local Build
+To have better control of deployment:
 
-Run the deployment script locally:
+1. First install all dependencies on the remote server
+2. Build
+
+### Install dependencies
+
+#### Client
 
 ```bash
-bash deploy.sh
+cd client
+npm install --verbose
+cd ..
 ```
 
-This will:
-- Build the client application
-- Set up the server
-- Create a remote deployment script
+#### Server
 
-### Remote Deployment
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for the complete deployment instructions.
-
-Environment variables are configured in `.env.production` on the server:
+1. Configure environment variables in `.env.production` on the server:
 
 ```
 NODE_ENV=production
@@ -92,6 +88,60 @@ MYSQL_HOST=your_db_host
 MYSQL_USER=your_db_user
 MYSQL_PWD=your_db_password
 MYSQL_DB=your_db_name
+```
+
+2. Install dependencies and set up the database:
+
+```bash
+cd server
+npm install --verbose
+node dbSetup/initDB.js
+cd ..
+```
+
+### Run deployment script
+
+```
+chmod +x deploy.sh
+bash deploy.sh
+```
+
+## Application Access
+
+After successful deployment, your application will be accessible at:
+http://remoodle.fun/stemday
+
+## Troubleshooting
+
+### Database Connection Issues
+
+If you encounter database connection issues:
+1. Verify that the MySQL credentials in `.env.production` are correct
+2. Ensure the MySQL server is running
+3. Check firewall rules for MySQL port access
+
+### PM2 Process Management
+
+To manage the running process:
+
+```bash
+# View running processes
+pm2 list
+
+# Check logs
+pm2 logs stem-day-app
+
+# Restart the application
+pm2 restart stem-day-app
+```
+
+### Server Persistence
+
+To ensure PM2 restarts on server reboot:
+
+```bash
+pm2 startup
+pm2 save
 ```
 
 ## Security Considerations
