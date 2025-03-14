@@ -7,7 +7,13 @@ function SongTable() {
   const [songs, setSongs] = useState([]);
 
   function getRegisteredSongs(setSongs) {
-    axios.get('/api/registeredSongs')
+    const apiUrl = import.meta.env.PROD 
+      ? '/stemday/api/registeredSongs'
+      : '/api/registeredSongs';
+      
+    console.log('Using API URL:', apiUrl);
+    
+    axios.get(apiUrl)
       .then((response) => {
         console.log('API Response:', response);
         setSongs(response.data);
