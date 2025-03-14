@@ -17,12 +17,14 @@ app.use(express.json());
 
 // Define the base path
 const BASE_PATH = process.env.NODE_ENV === 'production' ? '/stemday' : '';
+console.log(`BASE_PATH: ${BASE_PATH}`);
 
 // Serve static files from client build in production
 if (process.env.NODE_ENV === 'production') {
   // The main static files are served by the web server from /var/www/html/moodle/stemday
   // This is a fallback for direct Express server access
   app.use(`${BASE_PATH}`, express.static(path.join(__dirname, '../client/dist')));
+  console.log('Serving static files from client build: ' + BASE_PATH + express.static(path.join(__dirname, '../client/dist')));
 }
 
 // API Routes - in production these will be available at /stemday/api

@@ -57,7 +57,7 @@ cp -r ../client/dist/* /var/www/html/moodle/stemday
 # Create symbolic link for assets if it doesn't exist
 if [ ! -L "/var/www/html/moodle/stemday/assets" ]; then
   echo "Creating symbolic link for assets..."
-  ln -sf /home/stemday/stem-day-app/client/dist/assets /var/www/html/moodle/stemday/assets
+  sudo ln -sf /home/stemday/stem-day-app/client/dist/assets /var/www/html/moodle/stemday/assets
 else
   echo "Assets symbolic link already exists"
 fi

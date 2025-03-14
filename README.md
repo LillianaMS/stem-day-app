@@ -65,7 +65,7 @@ To have better control of deployment:
 1. First install all dependencies on the remote server
 2. Build
 
-### Install dependencies
+### Install dependencies and configure DB
 
 #### Client
 
