@@ -51,9 +51,6 @@ echo "Copying client build to server public directory..."
 # Ensure the target directory exists
 mkdir -p /var/www/html/moodle/stemday
 
-# Copy the client build to the server directory
-cp -r ../client/dist/* /var/www/html/moodle/stemday
-
 # Create symbolic link for assets if it doesn't exist
 if [ ! -L "/var/www/html/moodle/stemday/assets" ]; then
   echo "Creating symbolic link for assets..."
