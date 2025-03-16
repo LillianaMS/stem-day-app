@@ -1,6 +1,6 @@
 # STEM Day Application
 
-A full-stack application for monitoring PR STEM Day creations.
+An application for monitoring PR STEM Day creations.
 
 ## Project Structure
 
@@ -14,7 +14,7 @@ A full-stack application for monitoring PR STEM Day creations.
 - Node.js (v16 or later)
 - MySQL
 
-### Client Setup for Development
+### Client Setup
 
 ```bash
 cd client
@@ -24,7 +24,7 @@ npm run dev
 
 The client will be available at http://localhost:3000.
 
-### Server Setup for Development
+### Server Setup
 
 1. Create a `.env` file in the server directory with your database credentials:
 
@@ -57,49 +57,7 @@ npm start
 The server will be available at http://localhost:8081.
 
 
-
-## Production Deployment on Remote Server
-
-To have better control of deployment:
-
-1. First install all dependencies on the remote server
-2. Build
-
-### Install dependencies and configure DB
-
-#### Client
-
-```bash
-cd client
-npm install --verbose
-cd ..
-```
-
-#### Server
-
-1. Configure environment variables in `.env.production` on the server:
-
-```
-NODE_ENV=production
-PORT=8081
-
-# Database configuration
-MYSQL_HOST=your_db_host
-MYSQL_USER=your_db_user
-MYSQL_PWD=your_db_password
-MYSQL_DB=your_db_name
-```
-
-2. Install dependencies and set up the database:
-
-```bash
-cd server
-npm install --verbose
-node dbSetup/initDB.js
-cd ..
-```
-
-### Run deployment script
+## For production setup, run the deployment script
 
 ```
 chmod +x deploy.sh
@@ -116,7 +74,7 @@ http://remoodle.fun/stemday
 ### Database Connection Issues
 
 If you encounter database connection issues:
-1. Verify that the MySQL credentials in `.env.production` are correct
+1. Verify that the MySQL credentials in `.env` are correct
 2. Ensure the MySQL server is running
 3. Check firewall rules for MySQL port access
 
@@ -148,7 +106,6 @@ pm2 save
 
 - Never commit `.env` files to version control
 - Database credentials should be securely managed using environment variables
-- Different environment configurations are used for development and production
 
 ## API Endpoints
 

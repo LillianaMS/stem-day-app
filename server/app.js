@@ -2,9 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config({
-  path: process.env.NODE_ENV === 'production' 
-    ? path.resolve(__dirname, '.env.production')
-    : path.resolve(__dirname, '.env')
+  path: path.resolve(__dirname, '.env')
 });
 
 const pvRoutes = require('./pvRoutes');
@@ -15,40 +13,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Define the base path
-const BASE_PATH = process.env.NODE_ENV === 'production' ? '/stemday' : '';
-console.log(`BASE_PATH: ${BASE_PATH}`);
-
-// Serve static files from client build in production
-if (process.env.NODE_ENV === 'production') {
-  // The main static files are served by the web server from /var/www/html/moodle/stemday
-  // This is a fallback for direct Express server access
-  app.use(`${BASE_PATH}`, express.static(path.join(__dirname, '../client/dist')));
-  console.log('Serving static files from client build: ' + BASE_PATH + express.static(path.join(__dirname, '../client/dist')));
-}
-
-// API Routes - in production these will be available at /stemday/api
-app.use(`${BASE_PATH}/api`, pvRoutes);
-
-// CORS configuration for production
-if (process.env.NODE_ENV === 'production') {
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', process.env.BASE_URL || 'http://remoodle.fun');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    next();
-  });
-}
-
-// Catch-all route to serve the client app in production
-if (process.env.NODE_ENV === 'production') {
-  app.get(`${BASE_PATH}/*`, (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-}
+// API Routes
+app.use(`/api`, pvRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
-    console.log(`API available at: ${process.env.NODE_ENV === 'production' ? 'http://remoodle.fun/stemday/api' : `http://localhost:${PORT}/api`}`);
+    console.log(`Server listening on port ${PORT}`);
+    console.log(`API available at: http://localhost:${PORT}/api`);
 })

@@ -7,12 +7,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': mode === 'production' 
-          ? 'http://remoodle.fun/stemday/api' 
-          : 'http://localhost:8081'
+        '/api': 'http://localhost:8081'
       }
     },
-    base: mode === 'production' ? './' : '/',
     build: {
       outDir: 'dist',
       emptyOutDir: true

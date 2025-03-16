@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build script for STEM day app
-echo "Starting build for STEM Day Full Stack App..."
+echo "Starting build for STEM Day App..."
 
 # Define colors for output
 GREEN='\033[0;32m'
@@ -14,25 +14,23 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}Building client...${NC}"
 cd client
 
-# Build client for production
-echo "Building optimized production bundle..."
-NODE_ENV=production npm run build
-
+# Build client
+npm run build
 cd ..
 
-# Source environment variables from .env.production if it exists
+# Source environment variables from .env if it exists
 cd server
-if [ -f ".env.production" ]; then
-  echo "Loading environment variables from .env.production..."
+if [ -f ".env" ]; then
+  echo "Loading environment variables from .env ..."
   set -a  # automatically export all variables
-  source .env.production
+  source .env
   set +a
 fi
 
 # Check environment variables
 if [ -z "$MYSQL_HOST" ] || [ -z "$MYSQL_USER" ] || [ -z "$MYSQL_PWD" ] || [ -z "$MYSQL_DB" ]; then
   echo -e "${RED}Error: Required environment variables are not set.${NC}"
-  echo "Make sure to set the following variables in .env.production or in your environment:"
+  echo "Make sure to set the following variables in .env or in your environment:"
   echo "  - MYSQL_HOST"
   echo "  - MYSQL_USER"
   echo "  - MYSQL_PWD"
@@ -48,7 +46,7 @@ fi
 
 # Copy client build to server's public directory
 echo "Copying client build to server public directory..."
-# Ensure the target directory exists
+# Ensure the target server's public directory exists
 mkdir -p /var/www/html/moodle/stemday
 
 # Create symbolic link for assets if it doesn't exist
@@ -59,15 +57,22 @@ else
   echo "Assets symbolic link already exists"
 fi
 
-# Start the server in production mode with PM2
-echo "Starting server in production mode with PM2..."
-export NODE_ENV=production
+# Start the server with PM2
+echo "Starting server with PM2..."
 pm2 stop stem-day-app 2>/dev/null || true
 pm2 start app.js --name "stem-day-app" || echo -e "${RED}Warning: Failed to start with PM2.${NC}"
 
 # Set up PM2 to start on server boot
 echo "Setting up PM2 to start on system boot..."
 pm2 save
+
+# TO-DO  Reminder about Apache proxy configuration
+echo -e "${YELLOW}IMPORTANT: Ensure Apache is configured with a proxy for /stemday/api${NC}"
+echo "Make sure this is in your Apache configuration (typically in a site config file):"
+echo -e "${BLUE}ProxyPass /stemday/api http://localhost:8081/stemday/api${NC}"
+echo -e "${BLUE}ProxyPassReverse /stemday/api http://localhost:8081/stemday/api${NC}"
+echo "Then reload Apache with: sudo systemctl reload apache2"
+
 cd ..
 
 echo ""
