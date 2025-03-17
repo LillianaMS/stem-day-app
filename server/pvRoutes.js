@@ -17,9 +17,8 @@ const storage = multer.diskStorage({
         cb(null, dir);
     },
     filename: function(req, file, cb) {
-        // Create a unique filename using timestamp and original name
-        const uniqueFileName = Date.now() + '-' + file.originalname;
-        cb(null, uniqueFileName);
+        // Use the original filename from the client
+        cb(null, file.originalname);
     }
 });
 
@@ -63,6 +62,30 @@ router.post('/registry', handleQuery(pvQueries.registry, req => [
     req.body.scriptName,
     req.body.mp3Url
 ]));
+
+// Check if file exists endpoint
+router.post('/check-file-exists', (req, res) => {
+    try {
+        const fileName = req.body.fileName;
+        if (!fileName) {
+            return res.status(400).json({ success: false, message: 'Filename is required' });
+        }
+        
+        const filePath = path.join(__dirname, 'songs', fileName);
+        const exists = fs.existsSync(filePath);
+        
+        return res.status(200).json({
+            success: true,
+            exists: exists
+        });
+    } catch (error) {
+        console.error('Error checking file existence:', error);
+        return res.status(500).json({
+            success: false,
+            message: `Error checking file: ${error.message}`
+        });
+    }
+});
 
 // MP3 file upload endpoint
 router.post('/upload-song', upload.single('mp3File'), (req, res) => {
