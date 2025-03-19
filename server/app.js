@@ -14,10 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 // API Routes
-app.use(`/api`, pvRoutes);
+const apiRoute = '/stemday/api';
+app.use(apiRoute, pvRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-    console.log(`API available at: http://localhost:${PORT}/api`);
+    console.log(`API available at: http://localhost:${PORT}${apiRoute}`);
 })

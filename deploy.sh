@@ -62,9 +62,9 @@ echo "Starting server with PM2..."
 pm2 stop stem-day-app 2>/dev/null || true
 pm2 start app.js --name "stem-day-app" || echo -e "${RED}Warning: Failed to start with PM2.${NC}"
 
-# Set up PM2 to start on server boot
-echo "Setting up PM2 to start on system boot..."
-pm2 save
+# # Set up PM2 to start on server boot
+# echo "Setting up PM2 to start on system boot..."
+# pm2 save
 
 # TO-DO  Reminder about Apache proxy configuration
 echo -e "${YELLOW}IMPORTANT: Ensure Apache is configured with a proxy for /stemday/api${NC}"

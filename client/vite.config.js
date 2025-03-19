@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': 'http://localhost:8081'
+        '/stemday/api': 'http://localhost:8081'
       }
     },
     build: {
