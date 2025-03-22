@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const apiRoute = '/stemday/api';
+// Use absolute URL in production, relative in development
+// const STEM_API_ROUTE = import.meta.env.PROD 
+//   ? 'http://remoodle.fun:8081/stemday/api'
+//   : '/stemday/api';
+const STEM_API_ROUTE = 'http://remoodle.fun:8081/stemday/api'
 
 function SongTable() {
   const [songs, setSongs] = useState([]);
 
   function getRegisteredSongs(setSongs) {
-    const apiUrl = `${apiRoute}/registeredSongs`
+    const apiUrl = `${STEM_API_ROUTE}/registeredSongs`
       
     console.log('Using API URL:', apiUrl);
     

@@ -7,7 +7,8 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/stemday/api': 'http://localhost:8081'
+        // '/stemday/api': 'http://localhost:8081'
+        '/stemday/api': 'http://remoodle.fun:8081'
       }
     },
     build: {

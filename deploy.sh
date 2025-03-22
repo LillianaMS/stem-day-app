@@ -67,11 +67,12 @@ pm2 start app.js --name "stem-day-app" || echo -e "${RED}Warning: Failed to star
 # pm2 save
 
 # TO-DO  Reminder about Apache proxy configuration
-echo -e "${YELLOW}IMPORTANT: Ensure Apache is configured with a proxy for /stemday/api${NC}"
-echo "Make sure this is in your Apache configuration (typically in a site config file):"
-echo -e "${BLUE}ProxyPass /stemday/api http://localhost:8081/stemday/api${NC}"
-echo -e "${BLUE}ProxyPassReverse /stemday/api http://localhost:8081/stemday/api${NC}"
-echo "Then reload Apache with: sudo systemctl reload apache2"
+echo -e "${YELLOW}IMPORTANT: Ensure Apache is configured with an open 8081 port${NC}"
+echo "Run these commands in your terminal:"
+echo -e "${BLUE}ufw allow 8081/tcp${NC}"
+echo -e "${BLUE}ufw allow 8081${NC}"
+echo "Make sure the port is open:"
+echo -e "${BLUE}sudo ufw status verbose${NC}"
 
 cd ..
 
